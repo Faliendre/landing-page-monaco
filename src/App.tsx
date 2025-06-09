@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // Importar useState
+import React, { useState } from "react";
 import {
   Coffee,
   MapPin,
@@ -9,6 +9,69 @@ import {
   Menu,
   X,
 } from "lucide-react"; // Importar Menu y X para los iconos de hamburguesa
+
+// Datos completos del menú
+const menuData = [
+  {
+    category: "BEBIDAS CALIENTES CON AGUA",
+    items: [
+      { name: "ESPRESSO", price: "10 Bs." },
+      { name: "AMERICANO", price: "10 Bs." },
+    ],
+  },
+  {
+    category: "BEBIDAS CALIENTES CON LECHE",
+    items: [
+      { name: "CORTADO", price: "12 Bs." },
+      { name: "MACCHIATO", price: "10 Bs." },
+      { name: "FLAT WHITE", price: "15 Bs." },
+      { name: "CAPUCCINO", price: "12 Bs." },
+      { name: "LATTE", price: "15 Bs." },
+      { name: "MOCACCINO", price: "15 Bs." },
+      { name: "VAINILLA LATTE", price: "15 Bs." },
+      { name: "SPANISH COFFE", price: "15 Bs." },
+      { name: "CHOCOLATE CALIENTE", price: "12 Bs." },
+    ],
+  },
+  {
+    category: "BEBIDAS FRIAS CON AGUA",
+    items: [
+      { name: "ESPRESSO ORANGE", price: "12 Bs." },
+      { name: "ESPRESSO TONIC", price: "12 Bs." },
+      { name: "ICED LATTE", price: "15 Bs." },
+      { name: "ICED MOCA", price: "15 Bs." },
+      { name: "ICED CARAMEL LATTE", price: "15 Bs." },
+    ],
+  },
+  {
+    category: "JUGOS CON AGUA",
+    items: [
+      { name: "MARACUYA", price: "13 Bs." },
+      { name: "FRUTOS ROJOS", price: "13 Bs." },
+      { name: "LIMONADA DE COCO", price: "13 Bs." },
+    ],
+  },
+  {
+    category: "FRAPES",
+    items: [
+      { name: "FRAPUCCINO", price: "20 Bs." },
+      { name: "FRAPE DE MOCA", price: "20 Bs." },
+      { name: "FRAPE DE CARAMEL", price: "20 Bs." },
+      { name: "FRAPE DE OREO", price: "20 Bs." },
+      { name: "FRAPE PAI DE LIMON", price: "20 Bs." },
+    ],
+  },
+  {
+    category: "MASITAS",
+    items: [
+      { name: "Brownie", price: "6 Bs." },
+      { name: "Tres leches", price: "12 Bs." },
+      { name: "Galletas", price: "10 Bs." },
+      { name: "Croissant con jamón y queso", price: "10 Bs." },
+      { name: "Panini", price: "15 Bs." },
+    ],
+  },
+];
 
 // Componente del Encabezado
 const Header = () => {
@@ -130,8 +193,6 @@ const Header = () => {
   );
 };
 
-// --- EL RESTO DE TUS COMPONENTES (HeroSection, AboutSection, etc.) PERMANECEN IGUAL ---
-
 // Componente de la Sección Hero
 const HeroSection = () => {
   return (
@@ -212,67 +273,38 @@ const AboutSection = () => {
   );
 };
 
-// Componente de la Sección de Destacados (Productos)
-const HighlightsSection = () => {
-  const products = [
-    {
-      name: "Espresso Intenso",
-      description:
-        "Un café puro y potente, con notas achocolatadas y un final persistente.",
-      image: "https://placehold.co/400x300/333333/FFFFFF?text=Espresso",
-    },
-    {
-      name: "Latte Art",
-      description:
-        "Cremoso y suave, decorado con arte latte que deleita la vista y el paladar.",
-      image: "https://placehold.co/400x300/333333/FFFFFF?text=Latte",
-    },
-    {
-      name: "Tarta de Chocolate",
-      description:
-        "Una rebanada de cielo, rica y decadente, el acompañamiento perfecto para tu café.",
-      image: "https://placehold.co/400x300/333333/FFFFFF?text=Tarta",
-    },
-  ];
-
+// Componente de la Sección del Menú
+const MenuSection = () => {
+  // Renombrado de HighlightsSection a MenuSection
   return (
     <section id="menu" className="bg-gray-100 py-16 md:py-24">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-gray-900">
-          Nuestros <span className="text-green-600">Destacados</span>
+          Nuestro <span className="text-green-600">Menú</span>
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105"
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-48 object-cover rounded-t-2xl"
-                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                  (e.target as HTMLImageElement).onerror = null;
-                  (e.target as HTMLImageElement).src =
-                    "https://placehold.co/400x300/333333/FFFFFF?text=Imagen+No+Disponible";
-                }}
-              />
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-semibold mb-2 text-gray-800">
-                  {product.name}
-                </h3>
-                <p className="text-gray-600">{product.description}</p>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {" "}
+          {/* Layout de cuadrícula para categorías */}
+          {menuData.map((categoryData, catIndex) => (
+            <div key={catIndex} className="bg-white rounded-2xl shadow-lg p-6">
+              <h3 className="text-2xl font-semibold mb-4 text-center text-gray-800 border-b-2 border-green-600 pb-2">
+                {categoryData.category}
+              </h3>
+              <ul className="space-y-3">
+                {categoryData.items.map((item, itemIndex) => (
+                  <li
+                    key={itemIndex}
+                    className="flex justify-between items-center text-lg text-gray-700 border-b border-gray-200 pb-2 last:border-b-0 last:pb-0"
+                  >
+                    <span className="font-medium">{item.name}</span>
+                    <span className="text-green-700 font-bold">
+                      {item.price}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
-        </div>
-        <div className="text-center mt-12">
-          <a
-            href="#" // Puedes enlazar a una página de menú completo
-            className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 inline-block"
-          >
-            Ver Menú Completo
-          </a>
         </div>
       </div>
     </section>
@@ -428,7 +460,7 @@ const App = () => {
       <Header />
       <HeroSection />
       <AboutSection />
-      <HighlightsSection />
+      <MenuSection /> {/* Usamos el nuevo componente MenuSection */}
       <LocationContactSection />
       <Footer />
     </div>
