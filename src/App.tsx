@@ -316,7 +316,7 @@ const AboutSection = () => {
           }`}
         >
           <img
-            src="images/monaco1.jpg" // Usando tu imagen para About
+            src="images/monaco2.JPG" // Usando tu imagen para About
             alt="Interior moderno de Mónaco Coffee Shop"
             className="w-full max-w-md md:max-w-lg rounded-2xl shadow-xl transform transition-transform duration-500 hover:scale-105"
             onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
