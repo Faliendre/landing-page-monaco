@@ -272,9 +272,9 @@ const AboutSection = () => {
             Sobre <span className="text-monaco-teal">Nosotros</span>
           </h2>
           <p className="text-lg leading-relaxed mb-4">
-            En Mónaco Coffee Shop, creemos que el café es más que una bebida; es
-            una experiencia. Fundada con la pasión por los granos de calidad y
-            el servicio excepcional, nos dedicamos a ofrecerte momentos
+            En Mónaco Coffee, creemos que el café es más que una bebida; es una
+            experiencia. Fundada con la pasión por los granos de calidad y el
+            servicio excepcional, nos dedicamos a ofrecerte momentos
             inolvidables.
           </p>
           <p className="text-lg leading-relaxed">
@@ -459,7 +459,7 @@ const Footer = () => {
     <footer className="bg-gray-800 text-gray-300 py-8">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
         <p className="mb-4 md:mb-0">
-          © {new Date().getFullYear()} Mónaco Coffee Shop. Todos los derechos
+          © {new Date().getFullYear()} Mónaco Coffee. Todos los derechos
           reservados.
         </p>
         <div className="flex space-x-6">
