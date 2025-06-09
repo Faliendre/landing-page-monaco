@@ -1,13 +1,6 @@
 import React, { useState } from "react";
-// Eliminado Coffee de lucide-react ya que usamos el logo.
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Instagram,
-  Menu,
-  X, // Vuelve a importar TikTok
-} from "lucide-react";
+// Eliminado Coffee y TikTok de lucide-react ya que usamos el logo y no usaremos TikTok.
+import { MapPin, Phone, Mail, Instagram, Menu, X } from "lucide-react";
 import logo from "/images/logo.jpg"; // Importa tu logo. Asegúrate de que logo.jpg esté en la carpeta 'src' o 'public'.
 
 // Datos completos del menú
@@ -149,14 +142,7 @@ const Header = () => {
                 Ubicación
               </a>
             </li>
-            <li>
-              <a
-                href="#contact"
-                className="hover:text-monaco-teal transition-colors duration-300"
-              >
-                Contacto
-              </a>
-            </li>
+            {/* Se elimina el enlace a "Contacto" ya que el formulario ha sido removido */}
           </ul>
         </nav>
       </div>
@@ -192,15 +178,7 @@ const Header = () => {
                 Ubicación
               </a>
             </li>
-            <li>
-              <a
-                href="#contact"
-                onClick={toggleMobileMenu}
-                className="block px-4 py-2 hover:text-monaco-teal transition-colors duration-300 w-full text-center"
-              >
-                Contacto
-              </a>
-            </li>
+            {/* Se elimina el enlace a "Contacto" del menú móvil */}
           </ul>
         </div>
       )}
@@ -272,9 +250,9 @@ const AboutSection = () => {
             Sobre <span className="text-monaco-teal">Nosotros</span>
           </h2>
           <p className="text-lg leading-relaxed mb-4">
-            En Mónaco Coffee, creemos que el café es más que una bebida; es una
-            experiencia. Fundada con la pasión por los granos de calidad y el
-            servicio excepcional, nos dedicamos a ofrecerte momentos
+            En Mónaco Coffee Shop, creemos que el café es más que una bebida; es
+            una experiencia. Fundada con la pasión por los granos de calidad y
+            el servicio excepcional, nos dedicamos a ofrecerte momentos
             inolvidables.
           </p>
           <p className="text-lg leading-relaxed">
@@ -345,6 +323,13 @@ const MenuSection = () => {
 
 // Componente de la Sección de Ubicación y Contacto
 const LocationContactSection = () => {
+  // Número de teléfono para WhatsApp
+  const whatsappPhoneNumber = "+59179751134";
+  const whatsappLink = `https://wa.me/${whatsappPhoneNumber.replace(
+    "https://api.whatsapp.com/send?phone=59179751134&text=Hola%20%F0%9F%98%8A%20Quisiera%20hacer%20un%20pedido%2C%20me%20podrias%20pasar%20el%20men%C3%BA%3F%20&fbclid=PAQ0xDSwK0NKVleHRuA2FlbQIxMQABp7bnnG56J2QpCk4D4Y3Zvg4OIBlR-9hHEwsc4zoJ5IbFubBJgVrrzmno1R54_aem_HLuqNfAzT7ys3IQhU2qiJw ",
+    ""
+  )}`; // Eliminar '+' para el link de WhatsApp
+
   return (
     <section id="location" className="bg-gray-900 text-white py-16 md:py-24">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -362,7 +347,15 @@ const LocationContactSection = () => {
           </div>
           <div className="flex items-center mb-4">
             <Phone className="text-monaco-teal w-6 h-6 mr-3" />
-            <p className="text-lg">+59179751134</p>
+            {/* El número de teléfono ahora es un enlace a WhatsApp */}
+            <a
+              href="https://api.whatsapp.com/send?phone=59179751134&text=Hola%20%F0%9F%98%8A%20Quisiera%20hacer%20un%20pedido%2C%20me%20podrias%20pasar%20el%20men%C3%BA%3F%20&fbclid=PAQ0xDSwK0NKVleHRuA2FlbQIxMQABp7bnnG56J2QpCk4D4Y3Zvg4OIBlR-9hHEwsc4zoJ5IbFubBJgVrrzmno1R54_aem_HLuqNfAzT7ys3IQhU2qiJw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg text-white hover:text-monaco-teal transition-colors duration-300"
+            >
+              {whatsappPhoneNumber}
+            </a>
           </div>
           <div className="flex items-center mb-4">
             <Mail className="text-monaco-teal w-6 h-6 mr-3" />
@@ -373,6 +366,25 @@ const LocationContactSection = () => {
               className="bg-gray-800 rounded-2xl overflow-hidden shadow-xl"
               style={{ height: "300px", width: "100%" }}
             >
+              {/* Horarios de Atención */}
+              <div className="flex items-center mb-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-clock text-monaco-teal w-6 h-6 mr-3"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <p className="text-lg">Lunes a Domingos: 14:00 pm a 22:00 pm</p>
+              </div>
               {/* Placeholder para Google Maps */}
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1903.6439362765602!2d-66.27688282514767!3d-17.39796722340245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sbo!4v1749502737374!5m2!1ses-419!2sbo"
@@ -388,8 +400,8 @@ const LocationContactSection = () => {
           </div>
         </div>
 
-        {/* Formulario de Contacto */}
-        <div
+        {/* El formulario de contacto ha sido eliminado según tu solicitud */}
+        {/* <div
           id="contact"
           className="bg-white p-8 rounded-2xl shadow-xl text-gray-800"
         >
@@ -447,7 +459,7 @@ const LocationContactSection = () => {
               Enviar Mensaje
             </button>
           </form>
-        </div>
+        </div> */}
       </div>
     </section>
   );
@@ -459,10 +471,11 @@ const Footer = () => {
     <footer className="bg-gray-800 text-gray-300 py-8">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
         <p className="mb-4 md:mb-0">
-          © {new Date().getFullYear()} Mónaco Coffee. Todos los derechos
+          © {new Date().getFullYear()} Mónaco Coffee Shop. Todos los derechos
           reservados.
         </p>
         <div className="flex space-x-6">
+          {/* Se elimina el enlace de TikTok */}
           {/* Link de Instagram */}
           <a
             href="https://www.instagram.com/monaco_cafeteria?igsh=MTA1ZzhkaGgzdTRrbg=="
