@@ -1,7 +1,33 @@
-import React, { useState } from "react";
-// Eliminado Coffee y TikTok de lucide-react ya que usamos el logo y no usaremos TikTok.
+import React, { useState, useEffect, useRef } from "react"; // Importar useEffect y useRef
 import { MapPin, Phone, Mail, Instagram, Menu, X } from "lucide-react";
-import logo from "/images/logo.jpg"; // Importa tu logo. Asegúrate de que logo.jpg esté en la carpeta 'src' o 'public'.
+// Importa tu logo. Asegúrate de que logo.jpg esté en la carpeta 'public/images'.
+import logo from "/images/logo.jpg";
+
+// Hook personalizado para detectar si un elemento está en pantalla
+function useOnScreen<T extends HTMLElement>(
+  options?: IntersectionObserverInit
+) {
+  const ref = useRef<T>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    }, options);
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [options]);
+
+  return [ref, isVisible] as const;
+}
 
 // Datos completos del menú
 const menuData = [
@@ -149,7 +175,9 @@ const Header = () => {
 
       {/* Menú móvil (visible condicionalmente) */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg py-4">
+        <div className="md:hidden bg-white shadow-lg py-4 animate-menuSlideIn">
+          {" "}
+          {/* ANIMACIÓN AGREGADA AQUÍ: animate-menuSlideIn */}
           <ul className="flex flex-col items-center space-y-4 text-gray-700 font-inter">
             <li>
               <a
@@ -188,11 +216,20 @@ const Header = () => {
 
 // Componente de la Sección Hero
 const HeroSection = () => {
+  const [ref, isVisible] = useOnScreen<HTMLElement>({ rootMargin: "-100px" }); // Opciones para el observer
+
   return (
-    <section className="bg-gradient-to-r from-gray-900 to-black text-white py-20 md:py-32">
+    <section
+      ref={ref}
+      className="bg-gradient-to-r from-gray-900 to-black text-white py-20 md:py-32"
+    >
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Contenido de Texto */}
-        <div className="flex flex-col justify-center text-center md:text-left">
+        <div
+          className={`flex flex-col justify-center text-center md:text-left transition-all duration-1000 ${
+            isVisible ? "animate-fadeInUp" : "opacity-0 translate-y-full"
+          }`}
+        >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">
             Tu Experiencia de Café{" "}
             <span className="text-monaco-orange">Excepcional</span>
@@ -203,13 +240,21 @@ const HeroSection = () => {
           </p>
           <a
             href="#menu"
-            className="bg-monaco-teal hover:bg-monaco-teal-dark text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 inline-block mx-auto md:mx-0"
+            className={`bg-monaco-teal hover:bg-monaco-teal-dark text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 inline-block mx-auto md:mx-0 ${
+              isVisible
+                ? "animate-fadeInUp delay-300"
+                : "opacity-0 translate-y-full"
+            }`}
           >
             Explora Nuestro Menú
           </a>
         </div>
         {/* Imagen del Hero */}
-        <div className="flex justify-center md:justify-end">
+        <div
+          className={`flex justify-center md:justify-end transition-all duration-1000 ${
+            isVisible ? "animate-fadeInRight" : "opacity-0 translate-x-full"
+          }`}
+        >
           <img
             src="/images/logo.jpg" // Usando tu imagen para la sección Hero
             alt="Taza de café humeante en un ambiente moderno"
@@ -228,11 +273,17 @@ const HeroSection = () => {
 
 // Componente de la Sección Sobre Nosotros
 const AboutSection = () => {
+  const [ref, isVisible] = useOnScreen<HTMLElement>({ rootMargin: "-100px" });
+
   return (
-    <section id="about" className="bg-white py-16 md:py-24">
+    <section ref={ref} id="about" className="bg-white py-16 md:py-24">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Imagen de la Cafetería */}
-        <div className="flex justify-center md:justify-start">
+        <div
+          className={`flex justify-center md:justify-start transition-all duration-1000 ${
+            isVisible ? "animate-fadeInLeft" : "opacity-0 -translate-x-full"
+          }`}
+        >
           <img
             src="images/monaco.jpg" // Usando tu imagen para About
             alt="Interior moderno de Mónaco Coffee Shop"
@@ -245,7 +296,11 @@ const AboutSection = () => {
           />
         </div>
         {/* Contenido de Texto */}
-        <div className="text-gray-800">
+        <div
+          className={`text-gray-800 transition-all duration-1000 ${
+            isVisible ? "animate-fadeInRight" : "opacity-0 translate-x-full"
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center md:text-left">
             Sobre <span className="text-monaco-teal">Nosotros</span>
           </h2>
@@ -268,39 +323,42 @@ const AboutSection = () => {
 
 // Componente de la Sección del Menú
 const MenuSection = () => {
+  const [ref, isVisible] = useOnScreen<HTMLElement>({ rootMargin: "-100px" });
+
   return (
-    <section id="menu" className="bg-gray-100 py-16 md:py-24">
+    <section ref={ref} id="menu" className="bg-gray-100 py-16 md:py-24">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-gray-900">
+        <h2
+          className={`text-3xl md:text-4xl font-bold mb-12 text-center text-gray-900 transition-all duration-1000 ${
+            isVisible ? "animate-fadeInUp" : "opacity-0 translate-y-full"
+          }`}
+        >
           Nuestro <span className="text-monaco-teal">Menú</span>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {" "}
-          {/* Layout de cuadrícula para categorías */}
           {menuData.map((categoryData, catIndex) => (
-            <div key={catIndex} className="bg-white rounded-2xl shadow-lg pb-6">
-              {" "}
-              {/* Eliminado p-6 para permitir la imagen hasta el borde superior */}
-              {/* Imagen de referencia para la categoría */}
+            <div
+              key={catIndex}
+              className={`bg-white rounded-2xl shadow-lg pb-6 transition-all duration-1000 ${
+                isVisible ? "animate-fadeInUp" : "opacity-0 translate-y-full"
+              }`}
+              style={{ animationDelay: `${catIndex * 100}ms` }} // Retraso escalonado
+            >
               <img
                 src={categoryData.imageUrl}
                 alt={`Imagen de ${categoryData.category}`}
-                className="w-full h-32 object-cover rounded-t-2xl mb-4" // Clases para la imagen
+                className="w-full h-32 object-cover rounded-t-2xl mb-4"
                 onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                   (e.target as HTMLImageElement).onerror = null;
                   (
                     e.target as HTMLImageElement
-                  ).src = `https://placehold.co/400x150/monaco-teal/FFFFFF?text=Imagen+Menu`; // Actualizado con color monaco-teal
+                  ).src = `https://placehold.co/400x150/monaco-teal/FFFFFF?text=Imagen+Menu`;
                 }}
               />
               <h3 className="text-2xl font-semibold mb-4 text-center text-gray-800 border-b-2 border-monaco-teal pb-2 px-6">
-                {" "}
-                {/* Añadido px-6 para padding horizontal */}
                 {categoryData.category}
               </h3>
               <ul className="space-y-3 px-6">
-                {" "}
-                {/* Añadido px-6 para padding horizontal */}
                 {categoryData.items.map((item, itemIndex) => (
                   <li
                     key={itemIndex}
@@ -323,18 +381,25 @@ const MenuSection = () => {
 
 // Componente de la Sección de Ubicación y Contacto
 const LocationContactSection = () => {
+  const [ref, isVisible] = useOnScreen<HTMLElement>({ rootMargin: "-100px" });
+
   // Número de teléfono para WhatsApp
   const whatsappPhoneNumber = "+59179751134";
-  const whatsappLink = `https://wa.me/${whatsappPhoneNumber.replace(
-    "https://api.whatsapp.com/send?phone=59179751134&text=Hola%20%F0%9F%98%8A%20Quisiera%20hacer%20un%20pedido%2C%20me%20podrias%20pasar%20el%20men%C3%BA%3F%20&fbclid=PAQ0xDSwK0NKVleHRuA2FlbQIxMQABp7bnnG56J2QpCk4D4Y3Zvg4OIBlR-9hHEwsc4zoJ5IbFubBJgVrrzmno1R54_aem_HLuqNfAzT7ys3IQhU2qiJw ",
-    ""
-  )}`; // Eliminar '+' para el link de WhatsApp
+  const whatsappLink = `https://wa.me/${whatsappPhoneNumber.replace("+", "")}`;
 
   return (
-    <section id="location" className="bg-gray-900 text-white py-16 md:py-24">
+    <section
+      ref={ref}
+      id="location"
+      className="bg-gray-900 text-white py-16 md:py-24"
+    >
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Mapa o Información de Ubicación */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left">
+        <div
+          className={`flex flex-col items-center md:items-start text-center md:text-left transition-all duration-1000 ${
+            isVisible ? "animate-fadeInLeft" : "opacity-0 -translate-x-full"
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-monaco-teal">
             Encuéntranos
           </h2>
@@ -349,7 +414,7 @@ const LocationContactSection = () => {
             <Phone className="text-monaco-teal w-6 h-6 mr-3" />
             {/* El número de teléfono ahora es un enlace a WhatsApp */}
             <a
-              href="https://api.whatsapp.com/send?phone=59179751134&text=Hola%20%F0%9F%98%8A%20Quisiera%20hacer%20un%20pedido%2C%20me%20podrias%20pasar%20el%20men%C3%BA%3F%20&fbclid=PAQ0xDSwK0NKVleHRuA2FlbQIxMQABp7bnnG56J2QpCk4D4Y3Zvg4OIBlR-9hHEwsc4zoJ5IbFubBJgVrrzmno1R54_aem_HLuqNfAzT7ys3IQhU2qiJw"
+              href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
               className="text-lg text-white hover:text-monaco-teal transition-colors duration-300"
@@ -361,30 +426,31 @@ const LocationContactSection = () => {
             <Mail className="text-monaco-teal w-6 h-6 mr-3" />
             <p className="text-lg">hola@monacocoffee.com</p>
           </div>
+          {/* Horarios de Atención */}
+          <div className="flex items-center mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-clock text-monaco-teal w-6 h-6 mr-3"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <p className="text-lg">Lunes a Domingos: 14:00 pm a 22:00 pm</p>
+          </div>
+
           <div className="mt-8 w-full">
             <div
               className="bg-gray-800 rounded-2xl overflow-hidden shadow-xl"
               style={{ height: "300px", width: "100%" }}
             >
-              {/* Horarios de Atención */}
-              <div className="flex items-center mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-clock text-monaco-teal w-6 h-6 mr-3"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-                <p className="text-lg">Lunes a Domingos: 14:00 pm a 22:00 pm</p>
-              </div>
               {/* Placeholder para Google Maps */}
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1903.6439362765602!2d-66.27688282514767!3d-17.39796722340245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sbo!4v1749502737374!5m2!1ses-419!2sbo"
@@ -399,67 +465,6 @@ const LocationContactSection = () => {
             </div>
           </div>
         </div>
-
-        {/* El formulario de contacto ha sido eliminado según tu solicitud */}
-        {/* <div
-          id="contact"
-          className="bg-white p-8 rounded-2xl shadow-xl text-gray-800"
-        >
-          <h3 className="text-2xl font-bold mb-6 text-center">Contáctanos</h3>
-          <form className="space-y-4">
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Nombre
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-monaco-teal focus:border-monaco-teal"
-                placeholder="Tu Nombre"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-monaco-teal focus:border-monaco-teal"
-                placeholder="tu.email@ejemplo.com"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Mensaje
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={4}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-monaco-teal focus:border-monaco-teal"
-                placeholder="Tu mensaje..."
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-monaco-teal hover:bg-monaco-teal-dark text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105"
-            >
-              Enviar Mensaje
-            </button>
-          </form>
-        </div> */}
       </div>
     </section>
   );

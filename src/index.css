@@ -2,8 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Definición de la fuente para el cuerpo del documento */
 body {
   font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base de las animaciones: elementos invisibles y desplazados */
+/* Esto asegura que los elementos estén ocultos antes de que el Intersection Observer los active */
+.opacity-0 {
+  opacity: 0;
+}
+
+.translate-y-full {
+  transform: translateY(100%);
+}
+
+.-translate-x-full {
+  transform: translateX(-100%);
+}
+
+.translate-x-full {
+  transform: translateX(100%);
+}
+
+/* No necesitamos las keyframes directamente aquí si las definimos en tailwind.config.js */
+/* Si ya están en tailwind.config.js, este archivo solo necesita los @tailwind directivas y estilos base */
+/* Las clases como animate-fadeInUp ya se vinculan con las keyframes de tailwind.config.js */
+
+/* Clases de utilidad para el retardo de la animación */
+/* Estas clases se aplicarán condicionalmente en React para escalonar las animaciones */
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+.delay-600 {
+  animation-delay: 600ms;
+}
+.delay-700 {
+  animation-delay: 700ms;
+}
+.delay-800 {
+  animation-delay: 800ms;
+}
+.delay-900 {
+  animation-delay: 900ms;
+}
+.delay-1000 {
+  animation-delay: 1000ms;
 }
