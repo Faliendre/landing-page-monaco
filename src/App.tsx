@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"; // Importar useEffect y useRef
-import { MapPin, Phone, Mail, Instagram, Menu, X } from "lucide-react";
+import { MapPin, Phone, Instagram, Menu, X } from "lucide-react";
 // Importa tu logo. Asegúrate de que logo.jpg esté en la carpeta 'public/images'.
 import logo from "/images/logo.jpg";
 
