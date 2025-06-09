@@ -40,6 +40,17 @@ const menuData = [
     ],
   },
   {
+    category: "BEBIDAS FRIAS CON CAFE",
+    imageUrl: "/images/tonic.jpg", // Usando tu imagen
+    items: [
+      { name: "ESPRESSO TONIC", price: "12 Bs." },
+      { name: "SPRESSO ORANGE", price: "12 Bs." },
+      { name: "COLD BREW", price: "20 Bs." },
+      { name: "COLD BREW-MILK", price: "23 Bs." },
+      { name: "COLD BREW-ORANGE", price: "23 Bs." },
+    ],
+  },
+  {
     category: "BEBIDAS CALIENTES CON LECHE",
     imageUrl: "/images/macciato.jpg", // Usando tu imagen
     items: [
@@ -55,23 +66,42 @@ const menuData = [
     ],
   },
   {
-    category: "BEBIDAS FRIAS CON AGUA",
-    imageUrl: "/images/tonic.jpg", // Usando tu imagen
+    category: "INFUCIONES",
+    imageUrl: "/images/te.jpg", // Usando tu imagen
     items: [
-      { name: "ESPRESSO ORANGE", price: "12 Bs." },
-      { name: "ESPRESSO TONIC", price: "12 Bs." },
+      { name: "TE CLASICO", price: "10 Bs." },
+      { name: "TE MONACO", price: "12 Bs." },
+      { name: "TE DE FRUTOS ROJOS", price: "12 Bs." },
+      { name: "TE DE PIÑA", price: "12 Bs." },
+      { name: "MATE DE MANZANILLA", price: "10 Bs." },
+      { name: "MATE DE ANIS", price: "10 Bs." },
+      { name: "MATE DE TRI MATE", price: "10 Bs." },
+      { name: "MATE DE COCA", price: "10 Bs." },
+      { name: "MATE DE CEDRON", price: "10 Bs." },
+    ],
+  },
+  {
+    category: "BEBIDAS FRIAS CON LECHE",
+    imageUrl: "/images/icedcaramel.webp", // Usando tu imagen
+    items: [
+      { name: "ICED MONACO", price: "15 Bs." },
+      { name: "ICED VAINILLA LATTE", price: "15 Bs." },
       { name: "ICED LATTE", price: "15 Bs." },
-      { name: "ICED MOCA", price: "15 Bs." },
+      { name: "ICED MOCA LATTE", price: "15 Bs." },
       { name: "ICED CARAMEL LATTE", price: "15 Bs." },
     ],
   },
   {
-    category: "JUGOS CON AGUA",
+    category: "BEBIDAS FRIAS CON AGUA",
     imageUrl: "/images/maracuya.jpeg", // Usando tu imagen
     items: [
-      { name: "MARACUYA", price: "13 Bs." },
-      { name: "FRUTOS ROJOS", price: "13 Bs." },
-      { name: "LIMONADA DE COCO", price: "13 Bs." },
+      { name: "ICED TEA", price: "12 Bs." },
+      { name: "ICED BLACK TEA", price: "12 Bs." },
+      { name: "MARACUYA", price: "14 Bs." },
+      { name: "FRUTOS ROJOS", price: "14 Bs." },
+      { name: "LIMON CHELO", price: "14 Bs." },
+      { name: "PIÑA TROPICAL", price: "14 Bs." },
+      { name: "LIMONADA DE FRUTOS ROJOS", price: "14 Bs." },
     ],
   },
   {
@@ -83,17 +113,18 @@ const menuData = [
       { name: "FRAPE DE CARAMEL", price: "20 Bs." },
       { name: "FRAPE DE OREO", price: "20 Bs." },
       { name: "FRAPE PAI DE LIMON", price: "20 Bs." },
+      { name: "FRAPE BLUE ICE", price: "20 Bs." },
+      { name: "FRAPE DE TARO MILK", price: "20 Bs." },
     ],
   },
   {
     category: "MASITAS",
     imageUrl: "/images/brownie.jpeg", // Usando tu imagen
     items: [
-      { name: "Brownie", price: "6 Bs." },
-      { name: "Tres leches", price: "12 Bs." },
-      { name: "Galletas", price: "10 Bs." },
-      { name: "Croissant con jamón y queso", price: "10 Bs." },
-      { name: "Panini", price: "15 Bs." },
+      { name: "CROISSANT", price: "10 Bs." },
+      { name: "DONA", price: "8 Bs." },
+      { name: "CRUMBLE COOKIES", price: "10 Bs." },
+      { name: "PANINI/PIZZANINI", price: "15 Bs." },
     ],
   },
 ];
@@ -123,7 +154,7 @@ const Header = () => {
             }}
           />
           <h1 className="text-2xl font-bold text-gray-900 font-inter">
-            Mónaco Coffee Shop
+            Mónaco Coffee
           </h1>
         </div>
 
@@ -285,7 +316,7 @@ const AboutSection = () => {
           }`}
         >
           <img
-            src="images/monaco.jpg" // Usando tu imagen para About
+            src="images/monaco1.jpg" // Usando tu imagen para About
             alt="Interior moderno de Mónaco Coffee Shop"
             className="w-full max-w-md md:max-w-lg rounded-2xl shadow-xl transform transition-transform duration-500 hover:scale-105"
             onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -305,9 +336,9 @@ const AboutSection = () => {
             Sobre <span className="text-monaco-teal">Nosotros</span>
           </h2>
           <p className="text-lg leading-relaxed mb-4">
-            En Mónaco Coffee Shop, creemos que el café es más que una bebida; es
-            una experiencia. Fundada con la pasión por los granos de calidad y
-            el servicio excepcional, nos dedicamos a ofrecerte momentos
+            En Mónaco Coffee, creemos que el café es más que una bebida; es una
+            experiencia. Fundada con la pasión por los granos de calidad y el
+            servicio excepcional, nos dedicamos a ofrecerte momentos
             inolvidables.
           </p>
           <p className="text-lg leading-relaxed">
@@ -422,10 +453,7 @@ const LocationContactSection = () => {
               {whatsappPhoneNumber}
             </a>
           </div>
-          <div className="flex items-center mb-4">
-            <Mail className="text-monaco-teal w-6 h-6 mr-3" />
-            <p className="text-lg">hola@monacocoffee.com</p>
-          </div>
+
           {/* Horarios de Atención */}
           <div className="flex items-center mb-4">
             <svg
@@ -443,7 +471,7 @@ const LocationContactSection = () => {
               <circle cx="12" cy="12" r="10" />
               <polyline points="12 6 12 12 16 14" />
             </svg>
-            <p className="text-lg">Lunes a Domingos: 14:00 pm a 22:00 pm</p>
+            <p className="text-lg">Lunes a Domingos: 16:00 pm a 22:00 pm</p>
           </div>
 
           <div className="mt-8 w-full">
@@ -476,7 +504,7 @@ const Footer = () => {
     <footer className="bg-gray-800 text-gray-300 py-8">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
         <p className="mb-4 md:mb-0">
-          © {new Date().getFullYear()} Mónaco Coffee Shop. Todos los derechos
+          © {new Date().getFullYear()} Mónaco Coffee. Todos los derechos
           reservados.
         </p>
         <div className="flex space-x-6">
