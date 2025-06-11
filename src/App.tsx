@@ -417,6 +417,7 @@ const LocationContactSection = () => {
   // Número de teléfono para WhatsApp
   const whatsappPhoneNumber = "+59179751134";
   const whatsappLink = `https://wa.me/${whatsappPhoneNumber.replace("+", "")}`;
+  const mapaUrl = "https://maps.app.goo.gl/Nvkmc2wXeC9fdan8A";
 
   return (
     <section
@@ -481,7 +482,7 @@ const LocationContactSection = () => {
             >
               {/* Placeholder para Google Maps */}
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1903.6439362765602!2d-66.27688282514767!3d-17.39796722340245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sbo!4v1749502737374!5m2!1ses-419!2sbo"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5365.595516212333!2d-66.27817549745164!3d-17.401211454688525!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93e30b000bb3a4ab%3A0x9f1bf0488c5129fe!2zTcOzbmFjbw!5e0!3m2!1ses!2sbo!4v1749671830993!5m2!1ses!2sbo"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
